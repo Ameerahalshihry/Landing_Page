@@ -65,7 +65,19 @@ const handleClick = () => {
 handleClick()
 
 // Scroll to anchor ID using scrollTO event
+const handleScroll = () =>{
+    document.addEventListener('scroll', (e) =>{
+        sections.forEach( section =>{
+            const t= section.getBoundingClientRect().top
+            section.classList.remove("your-active-class")
+            if (t <= 150 && t >= -150){
+                section.classList.add("your-active-class")
+            }
+        })
+    })
 
+}
+handleScroll()
 
 /**
  * End Main Functions

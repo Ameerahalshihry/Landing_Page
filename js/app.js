@@ -22,17 +22,7 @@ const myDocFrag = document.createDocumentFragment()
 const navList = document.querySelector('#navbar__list')
 /**
  * End Global Variables
- * Start Helper Functions
- * 
-*/
-
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
+ * */
 
 // build the nav
 const buildNav = () =>{
@@ -40,15 +30,14 @@ const buildNav = () =>{
         const newNav = document.createElement('li')
         const navName = section.getAttribute('data-nav')
         const sectionId = section.id
-        newNav.innerHTML = `<a class="menu__link" href="#${sectionId}">${navName}</a>`
+        newNav.innerHTML = `<a class="menu__link" href="#${sectionId}" data-nav="${navName}">${navName}</a>`
         myDocFrag.appendChild(newNav)
     }
     navList.appendChild(myDocFrag)
 }
 buildNav()
 
-
-// Add class 'active' to section when near top of viewport
+// Scroll to section on link click
 const handleClick = () => {
     navList.addEventListener('click', (e) => {
         e.preventDefault()
@@ -64,29 +53,25 @@ const handleClick = () => {
 }
 handleClick()
 
-// Scroll to anchor ID using scrollTO event
+// Add class 'active' to section when near top of viewport
 const handleScroll = () =>{
+    const arrayAnchors = [...document.querySelectorAll('a')]
     document.addEventListener('scroll', (e) =>{
         sections.forEach( section =>{
             const t= section.getBoundingClientRect().top
             section.classList.remove("your-active-class")
             if (t <= 150 && t >= -150){
                 section.classList.add("your-active-class")
+                arrayAnchors.forEach(anchor =>{
+                    if (anchor.dataset.nav === section.dataset.nav){
+                        anchor.style.cssText=" background: #333; color: #fff"
+                    }else{
+                        anchor.style.cssText=" color: #333; background: #fff"
+                    }
+                })
             }
         })
     })
 
 }
 handleScroll()
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
